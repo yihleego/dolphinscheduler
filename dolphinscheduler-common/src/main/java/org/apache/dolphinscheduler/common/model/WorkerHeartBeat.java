@@ -43,4 +43,6 @@ public class WorkerHeartBeat implements HeartBeat {
     private int workerWaitingTaskCount; // worker waiting task count
     private int workerExecThreadCount; // worker thread pool thread count
 
+    private String osName; // System.getProperty("os.name")
+    private String osVersion; // System.getProperty("os.version")
 }

@@ -33,6 +33,8 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 public class WorkerHeartBeatTask extends BaseHeartBeatTask<WorkerHeartBeat> {
+    private static final String OS_NAME = System.getProperty("os.name");
+    private static final String OS_VERSION = System.getProperty("os.version");
 
     private final WorkerConfig workerConfig;
     private final RegistryClient registryClient;
@@ -75,6 +77,8 @@ public class WorkerHeartBeatTask extends BaseHeartBeatTask<WorkerHeartBeat> {
                 .workerWaitingTaskCount(this.workerWaitingTaskCount.get())
                 .workerExecThreadCount(workerConfig.getExecThreads())
                 .serverStatus(serverStatus)
+                .osName(OS_NAME)
+                .osVersion(OS_VERSION)
                 .build();
     }
 
