@@ -65,6 +65,7 @@ public class TaskExecutionContextBuilder {
         taskExecutionContext.setTaskType(taskInstance.getTaskType());
         taskExecutionContext.setLogPath(taskInstance.getLogPath());
         taskExecutionContext.setWorkerGroup(taskInstance.getWorkerGroup());
+        taskExecutionContext.setWorkerPlatform(taskInstance.getWorkerPlatform());
         taskExecutionContext.setEnvironmentConfig(taskInstance.getEnvironmentConfig());
         taskExecutionContext.setHost(taskInstance.getHost());
         taskExecutionContext.setResources(taskInstance.getResources());

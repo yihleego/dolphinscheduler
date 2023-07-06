@@ -51,7 +51,8 @@ public class WorkerTaskDispatcher extends BaseTaskDispatcher {
     @Override
     protected Optional<Host> getTaskInstanceDispatchHost(TaskExecuteRunnable taskExecuteRunnable) throws WorkerGroupNotFoundException {
         String workerGroup = taskExecuteRunnable.getTaskExecutionContext().getWorkerGroup();
-        return hostManager.select(workerGroup);
+        Integer workerPlatform = taskExecuteRunnable.getTaskExecutionContext().getWorkerPlatform();
+        return hostManager.select(workerGroup, workerPlatform);
 
     }
 }

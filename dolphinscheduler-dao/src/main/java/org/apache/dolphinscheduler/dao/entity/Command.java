@@ -87,6 +87,9 @@ public class Command {
     @TableField("worker_group")
     private String workerGroup;
 
+    @TableField("worker_platform")
+    private Integer workerPlatform;
+
     /**
      * tenant code
      */

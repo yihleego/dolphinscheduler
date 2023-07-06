@@ -17,6 +17,9 @@
 
 package org.apache.dolphinscheduler.server.master.dispatch.host;
 
+import org.apache.dolphinscheduler.common.enums.OS;
+import org.apache.dolphinscheduler.common.enums.WorkerPlatform;
+import org.apache.dolphinscheduler.common.utils.OSUtils;
 import org.apache.dolphinscheduler.remote.utils.Host;
 import org.apache.dolphinscheduler.server.master.dispatch.exceptions.WorkerGroupNotFoundException;
 import org.apache.dolphinscheduler.server.master.dispatch.host.assign.HostWorker;
@@ -44,8 +47,8 @@ public abstract class CommonHostManager implements HostManager {
     protected ServerNodeManager serverNodeManager;
 
     @Override
-    public Optional<Host> select(String workerGroup) throws WorkerGroupNotFoundException {
-        List<HostWorker> candidates = getWorkerCandidates(workerGroup);
+    public Optional<Host> select(String workerGroup, Integer workerPlatform) throws WorkerGroupNotFoundException {
+        List<HostWorker> candidates = getWorkerCandidates(workerGroup, workerPlatform);
         if (CollectionUtils.isEmpty(candidates)) {
             return Optional.empty();
         }
@@ -54,14 +57,33 @@ public abstract class CommonHostManager implements HostManager {
 
     protected abstract HostWorker select(Collection<HostWorker> nodes);
 
-    protected List<HostWorker> getWorkerCandidates(String workerGroup) throws WorkerGroupNotFoundException {
+
+    /**
+     * Retrieves a list of worker candidates based on the given worker group and worker platform.
+     *
+     * @param workerGroup    The name of the worker group.
+     * @param workerPlatform The platform of the worker (optional). Use null or WorkerPlatform.ANY.getCode()
+     *                       to retrieve candidates regardless of platform. Use WorkerPlatform.UNIX.getCode()
+     *                       to retrieve only Unix candidates, and use WorkerPlatform.WINDOWS.getCode()
+     *                       to retrieve only Windows candidates.
+     * @return A list of HostWorker objects representing the worker candidates.
+     * @throws WorkerGroupNotFoundException if the worker group is not found.
+     */
+    protected List<HostWorker> getWorkerCandidates(String workerGroup, Integer workerPlatform) throws WorkerGroupNotFoundException {
         List<HostWorker> hostWorkers = new ArrayList<>();
         Set<String> nodes = serverNodeManager.getWorkerGroupNodes(workerGroup);
         if (CollectionUtils.isNotEmpty(nodes)) {
             for (String node : nodes) {
-                serverNodeManager.getWorkerNodeInfo(node).ifPresent(
-                        workerNodeInfo -> hostWorkers
-                                .add(HostWorker.of(node, workerNodeInfo.getWorkerHostWeight(), workerGroup)));
+                serverNodeManager.getWorkerNodeInfo(node)
+                        .filter(workerNodeInfo -> {
+                            if (workerPlatform == null || workerPlatform == WorkerPlatform.ANY.getCode()) {
+                                return true;
+                            }
+                            OS osType = OSUtils.getOSType(workerNodeInfo.getOsName());
+                            return (osType == OS.UNIX && workerPlatform == WorkerPlatform.UNIX.getCode())
+                                    || (osType == OS.WINDOWS && workerPlatform == WorkerPlatform.WINDOWS.getCode());
+                        })
+                        .ifPresent(workerNodeInfo -> hostWorkers.add(HostWorker.of(node, workerNodeInfo.getWorkerHostWeight(), workerGroup)));
             }
         }
         return hostWorkers;

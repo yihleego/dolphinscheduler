@@ -15,18 +15,8 @@
  * limitations under the License.
  */
 
-package org.apache.dolphinscheduler.server.master.dispatch.host;
+package org.apache.dolphinscheduler.common.enums;
 
-import org.apache.dolphinscheduler.remote.utils.Host;
-import org.apache.dolphinscheduler.server.master.dispatch.exceptions.WorkerGroupNotFoundException;
-
-import java.util.Optional;
-
-/**
- *  host manager
- */
-public interface HostManager {
-
-    Optional<Host> select(String workerGroup, Integer workerPlatform) throws WorkerGroupNotFoundException;
-
+public enum OS {
+    WINDOWS, MAC, UNIX, SOLARIS, UNKNOWN
 }

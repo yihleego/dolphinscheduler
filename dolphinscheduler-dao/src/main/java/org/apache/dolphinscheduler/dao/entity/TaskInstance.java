@@ -237,6 +237,11 @@ public class TaskInstance implements Serializable {
     private String workerGroup;
 
     /**
+     * worker platform
+     */
+    private Integer workerPlatform;
+
+    /**
      * environment code
      */
     private Long environmentCode;

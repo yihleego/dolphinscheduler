@@ -50,6 +50,8 @@ public class TaskExecuteStartMessage extends BaseMessage {
 
     private String workerGroup;
 
+    private Integer workerPlatform;
+
     private Long environmentCode;
 
     private Map<String, String> startParams;

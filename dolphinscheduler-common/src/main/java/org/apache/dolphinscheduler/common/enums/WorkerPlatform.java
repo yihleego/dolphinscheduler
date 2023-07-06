@@ -15,18 +15,31 @@
  * limitations under the License.
  */
 
-package org.apache.dolphinscheduler.server.master.dispatch.host;
+package org.apache.dolphinscheduler.common.enums;
 
-import org.apache.dolphinscheduler.remote.utils.Host;
-import org.apache.dolphinscheduler.server.master.dispatch.exceptions.WorkerGroupNotFoundException;
+import com.baomidou.mybatisplus.annotation.EnumValue;
 
-import java.util.Optional;
+public enum WorkerPlatform {
 
-/**
- *  host manager
- */
-public interface HostManager {
+    ANY(0, "Any"),
+    UNIX(1, "Unix"),
+    WINDOWS(2, "Windows");
 
-    Optional<Host> select(String workerGroup, Integer workerPlatform) throws WorkerGroupNotFoundException;
+    WorkerPlatform(int code, String descp) {
+        this.code = code;
+        this.descp = descp;
+    }
+
+    @EnumValue
+    private final int code;
+    private final String descp;
+
+    public int getCode() {
+        return code;
+    }
+
+    public String getDescp() {
+        return descp;
+    }
 
 }

@@ -173,6 +173,11 @@ public class ProcessInstance {
     private String workerGroup;
 
     /**
+     * worker platform
+     */
+    private Integer workerPlatform;
+
+    /**
      * environment code
      */
     private Long environmentCode;

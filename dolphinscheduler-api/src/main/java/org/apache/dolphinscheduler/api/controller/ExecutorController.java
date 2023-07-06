@@ -99,6 +99,7 @@ public class ExecutorController extends BaseController {
      * @param runMode run mode
      * @param processInstancePriority process instance priority
      * @param workerGroup worker group
+     * @param workerPlatform worker platform
      * @param timeout timeout
      * @param expectedParallelismNumber the expected parallelism number when execute complement in parallel mode
      * @param testFlag testFlag
@@ -118,6 +119,7 @@ public class ExecutorController extends BaseController {
             @Parameter(name = "runMode", description = "RUN_MODE", schema = @Schema(implementation = RunMode.class)),
             @Parameter(name = "processInstancePriority", description = "PROCESS_INSTANCE_PRIORITY", required = true, schema = @Schema(implementation = Priority.class)),
             @Parameter(name = "workerGroup", description = "WORKER_GROUP", schema = @Schema(implementation = String.class, example = "default")),
+            @Parameter(name = "workerPlatform", description = "WORKER_PLATFORM", schema = @Schema(implementation = int.class, example = "0")),
             @Parameter(name = "tenantCode", description = "TENANT_CODE", schema = @Schema(implementation = String.class, example = "default")),
             @Parameter(name = "environmentCode", description = "ENVIRONMENT_CODE", schema = @Schema(implementation = Long.class, example = "-1")),
             @Parameter(name = "timeout", description = "TIMEOUT", schema = @Schema(implementation = int.class, example = "100")),
@@ -145,6 +147,7 @@ public class ExecutorController extends BaseController {
                                        @RequestParam(value = "runMode", required = false) RunMode runMode,
                                        @RequestParam(value = "processInstancePriority", required = false) Priority processInstancePriority,
                                        @RequestParam(value = "workerGroup", required = false, defaultValue = "default") String workerGroup,
+                                       @RequestParam(value = "workerPlatform", required = false) Integer workerPlatform,
                                        @RequestParam(value = "tenantCode", required = false, defaultValue = "default") String tenantCode,
                                        @RequestParam(value = "environmentCode", required = false, defaultValue = "-1") Long environmentCode,
                                        @RequestParam(value = "timeout", required = false) Integer timeout,
@@ -172,7 +175,7 @@ public class ExecutorController extends BaseController {
         Map<String, Object> result = execService.execProcessInstance(loginUser, projectCode, processDefinitionCode,
                 scheduleTime, execType, failureStrategy,
                 startNodeList, taskDependType, warningType, warningGroupId, runMode, processInstancePriority,
-                workerGroup, tenantCode, environmentCode, timeout, startParamMap, expectedParallelismNumber, dryRun,
+                workerGroup, workerPlatform, tenantCode, environmentCode, timeout, startParamMap, expectedParallelismNumber, dryRun,
                 testFlag,
                 complementDependentMode, version, allLevelDependent, executionOrder);
         return returnDataList(result);
@@ -196,6 +199,7 @@ public class ExecutorController extends BaseController {
      * @param runMode run mode
      * @param processInstancePriority process instance priority
      * @param workerGroup worker group
+     * @param workerPlatform worker platform
      * @param tenantCode tenant code
      * @param timeout timeout
      * @param expectedParallelismNumber the expected parallelism number when execute complement in parallel mode
@@ -216,6 +220,7 @@ public class ExecutorController extends BaseController {
             @Parameter(name = "runMode", description = "RUN_MODE", schema = @Schema(implementation = RunMode.class)),
             @Parameter(name = "processInstancePriority", description = "PROCESS_INSTANCE_PRIORITY", required = true, schema = @Schema(implementation = Priority.class)),
             @Parameter(name = "workerGroup", description = "WORKER_GROUP", schema = @Schema(implementation = String.class, example = "default")),
+            @Parameter(name = "workerPlatform", description = "WORKER_PLATFORM", schema = @Schema(implementation = int.class, example = "0")),
             @Parameter(name = "tenantCode", description = "TENANT_CODE", schema = @Schema(implementation = String.class, example = "default")),
             @Parameter(name = "environmentCode", description = "ENVIRONMENT_CODE", schema = @Schema(implementation = Long.class, example = "-1")),
             @Parameter(name = "timeout", description = "TIMEOUT", schema = @Schema(implementation = int.class, example = "100")),
@@ -243,6 +248,7 @@ public class ExecutorController extends BaseController {
                                             @RequestParam(value = "runMode", required = false) RunMode runMode,
                                             @RequestParam(value = "processInstancePriority", required = false) Priority processInstancePriority,
                                             @RequestParam(value = "workerGroup", required = false, defaultValue = "default") String workerGroup,
+                                            @RequestParam(value = "workerPlatform", required = false) Integer workerPlatform,
                                             @RequestParam(value = "tenantCode", required = false, defaultValue = "default") String tenantCode,
                                             @RequestParam(value = "environmentCode", required = false, defaultValue = "-1") Long environmentCode,
                                             @RequestParam(value = "timeout", required = false) Integer timeout,
@@ -280,7 +286,7 @@ public class ExecutorController extends BaseController {
             result = execService.execProcessInstance(loginUser, projectCode, processDefinitionCode, scheduleTime,
                     execType, failureStrategy,
                     startNodeList, taskDependType, warningType, warningGroupId, runMode, processInstancePriority,
-                    workerGroup, tenantCode, environmentCode, timeout, startParamMap, expectedParallelismNumber, dryRun,
+                    workerGroup, workerPlatform, tenantCode, environmentCode, timeout, startParamMap, expectedParallelismNumber, dryRun,
                     testFlag,
                     complementDependentMode, null, allLevelDependent, executionOrder);
 
@@ -427,6 +433,7 @@ public class ExecutorController extends BaseController {
      * @param version taskDefinitionVersion
      * @param warningGroupId warning group id
      * @param workerGroup worker group
+     * @param workerPlatform worker platform
      * @return start task result code
      */
     @Operation(summary = "startTaskInstance", description = "RUN_TASK_INSTANCE_NOTES")
@@ -437,6 +444,7 @@ public class ExecutorController extends BaseController {
             @Parameter(name = "warningType", description = "WARNING_TYPE", required = true, schema = @Schema(implementation = WarningType.class)),
             @Parameter(name = "warningGroupId", description = "WARNING_GROUP_ID", schema = @Schema(implementation = int.class, example = "100")),
             @Parameter(name = "workerGroup", description = "WORKER_GROUP", schema = @Schema(implementation = String.class, example = "default")),
+            @Parameter(name = "workerPlatform", description = "WORKER_PLATFORM", schema = @Schema(implementation = int.class, example = "0")),
             @Parameter(name = "tenantCode", description = "TENANT_CODE", schema = @Schema(implementation = String.class, example = "default")),
             @Parameter(name = "environmentCode", description = "ENVIRONMENT_CODE", schema = @Schema(implementation = long.class, example = "-1")),
             @Parameter(name = "timeout", description = "TIMEOUT", schema = @Schema(implementation = int.class, example = "100")),
@@ -452,6 +460,7 @@ public class ExecutorController extends BaseController {
                                           @RequestParam(value = "version", required = true) int version,
                                           @RequestParam(value = "warningGroupId", required = false, defaultValue = "0") Integer warningGroupId,
                                           @RequestParam(value = "workerGroup", required = false, defaultValue = "default") String workerGroup,
+                                          @RequestParam(value = "workerPlatform", required = false) Integer workerPlatform,
                                           @RequestParam(value = "tenantCode", required = false, defaultValue = "default") String tenantCode,
                                           @RequestParam(value = "environmentCode", required = false, defaultValue = "-1") Long environmentCode,
                                           @RequestParam(value = "startParams", required = false) String startParams,
@@ -465,7 +474,7 @@ public class ExecutorController extends BaseController {
         log.info("Start to execute stream task instance, projectCode:{}, taskDefinitionCode:{}, taskVersion:{}.",
                 projectCode, code, version);
         Map<String, Object> result = execService.execStreamTaskInstance(loginUser, projectCode, code, version,
-                warningGroupId, workerGroup, tenantCode, environmentCode, startParamMap, dryRun);
+                warningGroupId, workerGroup, workerPlatform, tenantCode, environmentCode, startParamMap, dryRun);
         return returnDataList(result);
     }
 
