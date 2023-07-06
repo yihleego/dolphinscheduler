@@ -371,6 +371,7 @@ public class PythonGateway {
                                      String workflowName,
                                      String cronTime,
                                      String workerGroup,
+                                     Integer workerPlatform,
                                      String warningType,
                                      Integer warningGroupId,
                                      Integer timeout) {
@@ -396,6 +397,7 @@ public class PythonGateway {
                 DEFAULT_RUN_MODE,
                 DEFAULT_PRIORITY,
                 workerGroup,
+                workerPlatform,
                 user.getTenantCode(),
                 DEFAULT_ENVIRONMENT_CODE,
                 timeout,

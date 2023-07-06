@@ -116,7 +116,7 @@ public class ExecuteFunctionControllerTest extends AbstractControllerTest {
         when(executorService.execProcessInstance(any(User.class), eq(projectCode), eq(processDefinitionCode),
                 eq(scheduleTime), eq(execType), eq(failureStrategy), eq(startNodeList), eq(taskDependType),
                 eq(warningType),
-                eq(warningGroupId), eq(runMode), eq(processInstancePriority), eq(workerGroup), eq(tenantCode),
+                eq(warningGroupId), eq(runMode), eq(processInstancePriority), eq(workerGroup), null, eq(tenantCode),
                 eq(environmentCode),
                 eq(timeout), eq(startParams), eq(expectedParallelismNumber), eq(dryRun), eq(testFlag),
                 eq(complementDependentMode), eq(version),
@@ -162,7 +162,7 @@ public class ExecuteFunctionControllerTest extends AbstractControllerTest {
         when(executorService.execProcessInstance(any(User.class), eq(projectCode), eq(processDefinitionCode),
                 eq(scheduleTime), eq(execType), eq(failureStrategy), eq(startNodeList), eq(taskDependType),
                 eq(warningType),
-                eq(warningGroupId), eq(runMode), eq(processInstancePriority), eq(workerGroup), eq(tenantCode),
+                eq(warningGroupId), eq(runMode), eq(processInstancePriority), eq(workerGroup), null, eq(tenantCode),
                 eq(environmentCode),
                 eq(Constants.MAX_TASK_TIMEOUT), eq(startParams), eq(expectedParallelismNumber), eq(dryRun),
                 eq(testFlag),
@@ -207,7 +207,7 @@ public class ExecuteFunctionControllerTest extends AbstractControllerTest {
         when(executorService.execProcessInstance(any(User.class), eq(projectCode), eq(processDefinitionCode),
                 eq(scheduleTime), eq(execType), eq(failureStrategy), eq(startNodeList), eq(taskDependType),
                 eq(warningType),
-                eq(warningGroupId), eq(runMode), eq(processInstancePriority), eq(workerGroup), eq(tenantCode),
+                eq(warningGroupId), eq(runMode), eq(processInstancePriority), eq(workerGroup), null, eq(tenantCode),
                 eq(environmentCode),
                 eq(timeout), eq(null), eq(expectedParallelismNumber), eq(dryRun), eq(testFlag),
                 eq(complementDependentMode), eq(version), eq(allLevelDependent))).thenReturn(executeServiceResult);
@@ -237,7 +237,7 @@ public class ExecuteFunctionControllerTest extends AbstractControllerTest {
 
         when(executorService.execProcessInstance(any(User.class), eq(projectCode), eq(processDefinitionCode),
                 eq(scheduleTime), eq(null), eq(failureStrategy), eq(null), eq(null), eq(warningType),
-                eq(null), eq(null), eq(null), eq("default"), eq("default"), eq(-1L),
+                eq(null), eq(null), eq(null), eq("default"), null, eq("default"), eq(-1L),
                 eq(Constants.MAX_TASK_TIMEOUT), eq(null), eq(null), eq(0), eq(0),
                 eq(complementDependentMode), eq(version), eq(allLevelDependent))).thenReturn(executeServiceResult);
 

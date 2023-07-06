@@ -13,20 +13,9 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- */
+*/
 
-package org.apache.dolphinscheduler.server.master.dispatch.host;
-
-import org.apache.dolphinscheduler.remote.utils.Host;
-import org.apache.dolphinscheduler.server.master.dispatch.exceptions.WorkerGroupNotFoundException;
-
-import java.util.Optional;
-
-/**
- *  host manager
- */
-public interface HostManager {
-
-    Optional<Host> select(String workerGroup, Integer workerPlatform) throws WorkerGroupNotFoundException;
-
-}
+ALTER TABLE t_ds_command ADD worker_platform int DEFAULT NULL COMMENT 'worker platform';
+ALTER TABLE t_ds_process_instance ADD worker_platform int DEFAULT NULL COMMENT 'worker platform';
+ALTER TABLE t_ds_task_definition ADD worker_platform int DEFAULT NULL COMMENT 'worker platform';
+ALTER TABLE t_ds_task_instance ADD worker_platform int DEFAULT NULL COMMENT 'worker platform';

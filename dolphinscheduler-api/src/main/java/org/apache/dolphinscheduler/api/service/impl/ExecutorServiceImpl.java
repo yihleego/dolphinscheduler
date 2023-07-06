@@ -216,7 +216,7 @@ public class ExecutorServiceImpl extends BaseServiceImpl implements ExecutorServ
                                                    FailureStrategy failureStrategy, String startNodeList,
                                                    TaskDependType taskDependType, WarningType warningType,
                                                    Integer warningGroupId, RunMode runMode,
-                                                   Priority processInstancePriority, String workerGroup,
+                                                   Priority processInstancePriority, String workerGroup, Integer workerPlatform,
                                                    String tenantCode,
                                                    Long environmentCode, Integer timeout,
                                                    Map<String, String> startParams, Integer expectedParallelismNumber,
@@ -262,7 +262,7 @@ public class ExecutorServiceImpl extends BaseServiceImpl implements ExecutorServ
                         failureStrategy,
                         startNodeList,
                         cronTime, warningType, loginUser.getId(), warningGroupId, runMode, processInstancePriority,
-                        workerGroup, tenantCode,
+                        workerGroup, workerPlatform, tenantCode,
                         environmentCode, startParams, expectedParallelismNumber, dryRun, testFlag,
                         complementDependentMode, allLevelDependent);
 
@@ -743,7 +743,7 @@ public class ExecutorServiceImpl extends BaseServiceImpl implements ExecutorServ
     private int createCommand(Long triggerCode, CommandType commandType, long processDefineCode, TaskDependType nodeDep,
                               FailureStrategy failureStrategy, String startNodeList, String schedule,
                               WarningType warningType, int executorId, Integer warningGroupId, RunMode runMode,
-                              Priority processInstancePriority, String workerGroup, String tenantCode,
+                              Priority processInstancePriority, String workerGroup, Integer workerPlatform, String tenantCode,
                               Long environmentCode,
                               Map<String, String> startParams, Integer expectedParallelismNumber, int dryRun,
                               int testFlag, ComplementDependentMode complementDependentMode,
@@ -782,6 +782,7 @@ public class ExecutorServiceImpl extends BaseServiceImpl implements ExecutorServ
         command.setWarningGroupId(warningGroupId);
         command.setProcessInstancePriority(processInstancePriority);
         command.setWorkerGroup(workerGroup);
+        command.setWorkerPlatform(workerPlatform);
         command.setTenantCode(tenantCode);
         command.setEnvironmentCode(environmentCode);
         command.setDryRun(dryRun);
@@ -1192,7 +1193,7 @@ public class ExecutorServiceImpl extends BaseServiceImpl implements ExecutorServ
     @Override
     public Map<String, Object> execStreamTaskInstance(User loginUser, long projectCode, long taskDefinitionCode,
                                                       int taskDefinitionVersion,
-                                                      int warningGroupId, String workerGroup, String tenantCode,
+                                                      int warningGroupId, String workerGroup, Integer workerPlatform, String tenantCode,
                                                       Long environmentCode,
                                                       Map<String, String> startParams, int dryRun) {
         Project project = projectMapper.queryByCode(projectCode);
@@ -1215,6 +1216,7 @@ public class ExecutorServiceImpl extends BaseServiceImpl implements ExecutorServ
         taskExecuteStartMessage.setTaskDefinitionCode(taskDefinitionCode);
         taskExecuteStartMessage.setTaskDefinitionVersion(taskDefinitionVersion);
         taskExecuteStartMessage.setWorkerGroup(workerGroup);
+        taskExecuteStartMessage.setWorkerPlatform(workerPlatform);
         taskExecuteStartMessage.setTenantCode(tenantCode);
         taskExecuteStartMessage.setWarningGroupId(warningGroupId);
         taskExecuteStartMessage.setEnvironmentCode(environmentCode);

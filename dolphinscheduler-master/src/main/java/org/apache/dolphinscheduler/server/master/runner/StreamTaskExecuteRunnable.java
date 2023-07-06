@@ -274,6 +274,8 @@ public class StreamTaskExecuteRunnable implements Runnable {
         taskInstance.setEnvironmentCode(
                 taskDefinition.getEnvironmentCode() == 0 ? -1 : taskDefinition.getEnvironmentCode());
 
+        taskInstance.setWorkerPlatform(taskDefinition.getWorkerPlatform());
+
         if (!taskInstance.getEnvironmentCode().equals(-1L)) {
             Environment environment = processService.findEnvironmentByCode(taskInstance.getEnvironmentCode());
             if (Objects.nonNull(environment) && StringUtils.isNotEmpty(environment.getConfig())) {

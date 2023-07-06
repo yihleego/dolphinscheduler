@@ -165,6 +165,11 @@ public class TaskNode {
     private String workerGroup;
 
     /**
+     * worker platform
+     */
+    private Integer workerPlatform;
+
+    /**
      * environment code
      */
     private Long environmentCode;
@@ -371,6 +376,14 @@ public class TaskNode {
 
     public void setWorkerGroup(String workerGroup) {
         this.workerGroup = workerGroup;
+    }
+
+    public Integer getWorkerPlatform() {
+        return workerPlatform;
+    }
+
+    public void setWorkerPlatform(Integer workerPlatform) {
+        this.workerPlatform = workerPlatform;
     }
 
     public String getConditionResult() {

@@ -1206,10 +1206,8 @@ public class WorkflowExecuteRunnable implements Callable<WorkflowSubmitStatus> {
             taskInstance.setTaskInstancePriority(taskNode.getTaskInstancePriority());
         }
 
-        String processWorkerGroup = processInstance.getWorkerGroup();
-        processWorkerGroup = StringUtils.isBlank(processWorkerGroup) ? DEFAULT_WORKER_GROUP : processWorkerGroup;
-        String taskWorkerGroup =
-                StringUtils.isBlank(taskNode.getWorkerGroup()) ? processWorkerGroup : taskNode.getWorkerGroup();
+        String processWorkerGroup = StringUtils.isBlank(processInstance.getWorkerGroup()) ? DEFAULT_WORKER_GROUP : processInstance.getWorkerGroup();
+        String taskWorkerGroup = StringUtils.isBlank(taskNode.getWorkerGroup()) ? processWorkerGroup : taskNode.getWorkerGroup();
 
         Long processEnvironmentCode =
                 Objects.isNull(processInstance.getEnvironmentCode()) ? -1 : processInstance.getEnvironmentCode();
@@ -1230,6 +1228,16 @@ public class WorkflowExecuteRunnable implements Callable<WorkflowSubmitStatus> {
                 taskInstance.setEnvironmentConfig(environment.getConfig());
             }
         }
+
+        Integer processWorkerPlatform = processInstance.getWorkerPlatform();
+        Integer taskWorkerPlatform = taskNode.getWorkerPlatform() == null ? processWorkerPlatform : taskNode.getWorkerPlatform();
+
+        if (processWorkerPlatform != null && taskWorkerPlatform == null) {
+            taskInstance.setWorkerPlatform(processWorkerPlatform);
+        } else {
+            taskInstance.setWorkerPlatform(taskWorkerPlatform);
+        }
+
         // delay execution time
         taskInstance.setDelayTime(taskNode.getDelayTime());
         taskInstance.setTaskExecuteType(taskNode.getTaskExecuteType());

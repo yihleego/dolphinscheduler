@@ -207,6 +207,11 @@ public class TaskExecutionContext implements Serializable {
     private String workerGroup;
 
     /**
+     * worker platform
+     */
+    private Integer workerPlatform;
+
+    /**
      * delay execution time.
      */
     private int delayTime;

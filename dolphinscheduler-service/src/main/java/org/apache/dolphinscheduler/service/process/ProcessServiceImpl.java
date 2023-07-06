@@ -634,6 +634,7 @@ public class ProcessServiceImpl implements ProcessService {
         processInstance.setProcessInstancePriority(command.getProcessInstancePriority());
         String workerGroup = StringUtils.defaultIfEmpty(command.getWorkerGroup(), Constants.DEFAULT_WORKER_GROUP);
         processInstance.setWorkerGroup(workerGroup);
+        processInstance.setWorkerPlatform(command.getWorkerPlatform());
         processInstance
                 .setEnvironmentCode(Objects.isNull(command.getEnvironmentCode()) ? -1 : command.getEnvironmentCode());
         processInstance.setTimeout(processDefinition.getTimeout());
@@ -2218,6 +2219,7 @@ public class ProcessServiceImpl implements ProcessService {
                 taskNode.setParams(JSONUtils.toJsonString(taskParamsMap));
                 taskNode.setTaskInstancePriority(taskDefinitionLog.getTaskPriority());
                 taskNode.setWorkerGroup(taskDefinitionLog.getWorkerGroup());
+                taskNode.setWorkerPlatform(taskDefinitionLog.getWorkerPlatform());
                 taskNode.setEnvironmentCode(taskDefinitionLog.getEnvironmentCode());
                 taskNode.setTimeout(JSONUtils
                         .toJsonString(new TaskTimeoutParameter(taskDefinitionLog.getTimeoutFlag() == TimeoutFlag.OPEN,

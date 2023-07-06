@@ -143,6 +143,11 @@ public class TaskDefinition {
     private String workerGroup;
 
     /**
+     * worker platform
+     */
+    private Integer workerPlatform;
+
+    /**
      * environment code
      */
     private long environmentCode;

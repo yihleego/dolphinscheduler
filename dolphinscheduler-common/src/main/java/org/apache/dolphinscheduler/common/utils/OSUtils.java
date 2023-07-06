@@ -19,6 +19,7 @@ package org.apache.dolphinscheduler.common.utils;
 
 import org.apache.dolphinscheduler.common.constants.Constants;
 import org.apache.dolphinscheduler.common.constants.TenantConstants;
+import org.apache.dolphinscheduler.common.enums.OS;
 import org.apache.dolphinscheduler.common.shell.ShellExecutor;
 
 import oshi.SystemInfo;
@@ -460,8 +461,41 @@ public class OSUtils {
         return false;
     }
 
-    public static Boolean isWindows() {
-        return System.getProperty("os.name").startsWith("Windows");
+    public static final String OS_NAME = System.getProperty("os.name");
+    public static final String OS_VERSION = System.getProperty("os.version");
+    public static final String OS_NAME_LOWER_CASE = OS_NAME.toLowerCase();
+
+    public static OS getOSType() {
+        return getOSType(OS_NAME_LOWER_CASE);
     }
 
+    public static OS getOSType(String osName) {
+        if (osName.contains("win")) {
+            return OS.WINDOWS;
+        } else if (osName.contains("mac")) {
+            return OS.MAC;
+        } else if (osName.contains("nix") || osName.contains("nux") || osName.contains("aix")) {
+            return OS.UNIX;
+        } else if (osName.contains("sunos")) {
+            return OS.SOLARIS;
+        } else {
+            return OS.UNKNOWN;
+        }
+    }
+
+    public static boolean isWindows() {
+        return getOSType() == OS.WINDOWS;
+    }
+
+    public static boolean isMac() {
+        return getOSType() == OS.MAC;
+    }
+
+    public static boolean isUnix() {
+        return getOSType() == OS.UNIX;
+    }
+
+    public static boolean isSolaris() {
+        return getOSType() == OS.SOLARIS;
+    }
 }
