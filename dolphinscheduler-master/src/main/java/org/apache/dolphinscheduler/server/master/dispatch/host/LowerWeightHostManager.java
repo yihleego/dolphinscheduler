@@ -70,8 +70,8 @@ public class LowerWeightHostManager extends CommonHostManager {
     }
 
     @Override
-    public Optional<Host> select(String workerGroup) throws WorkerGroupNotFoundException {
-        Set<HostWeight> workerHostWeights = getWorkerHostWeights(workerGroup);
+    public Optional<Host> select(String workerGroup, Integer workerPlatform) throws WorkerGroupNotFoundException {
+        Set<HostWeight> workerHostWeights = getWorkerHostWeights(workerGroup, workerPlatform);
         if (CollectionUtils.isNotEmpty(workerHostWeights)) {
             return Optional.ofNullable(selector.select(workerHostWeights).getHost());
         }
@@ -155,7 +155,7 @@ public class LowerWeightHostManager extends CommonHostManager {
                         heartBeat.getStartupTime()));
     }
 
-    private Set<HostWeight> getWorkerHostWeights(String workerGroup) throws WorkerGroupNotFoundException {
+    private Set<HostWeight> getWorkerHostWeights(String workerGroup, Integer workerPlatform) throws WorkerGroupNotFoundException {
         workerGroupReadLock.lock();
         try {
             Set<HostWeight> hostWeights = workerHostWeightsMap.get(workerGroup);
